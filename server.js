@@ -5,14 +5,21 @@
 // const port = 3001
 
 const mongoose = require("mongoose")
-const User= require("./schema")
+const User= require("./models/User")
 
 
 mongoose.connect("mongodb://localhost/socialmediadb")
 run()
 async function run(){
-    const user =await User.create({name:"roberto", age:26})
-    user.name= "andros"
-    await user.save()
-    console.log(user)
+    try{
+        const user= await User.create({
+            name:"roberto",
+            age:32,
+            email:"TEST@EMAIL.COM"
+        })
+
+    }
+    catch (e){console.log(e)}
+       
 }
+  
