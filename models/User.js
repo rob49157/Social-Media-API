@@ -9,6 +9,10 @@ const UserSchema = new mongoose.Schema({
         lowercase:true
       
     },
+    //joining wiht thought
+    thought:mongoose.SchemaType.Objectid,
+    friends:[String],
+    //
     createdAt:{
         type: Date,
         default: ()=> Date.now(),
