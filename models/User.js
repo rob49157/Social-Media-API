@@ -10,7 +10,8 @@ const UserSchema = new mongoose.Schema({
       
     },
     //joining wiht thought
-    thought:mongoose.SchemaType.Objectid,
+    // thought:mongoose.SchemaType.Objectid,
+    //friends
     friends:[String],
     //
     createdAt:{
@@ -23,6 +24,10 @@ const UserSchema = new mongoose.Schema({
     },
     
     
+})
+
+UserSchema.virtual("friends").get(function(){
+    return`${this.friends}`
 })
 
 const User= mongoose.model('User', UserSchema)
