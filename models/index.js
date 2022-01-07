@@ -1,3 +1,3 @@
 const User= require("./User")
 
-module.exports={UserSchema}
+module.exports={User}
