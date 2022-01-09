@@ -1,4 +1,8 @@
+const { MongoGridFSChunkError } = require("mongodb")
 const mongoose = require("mongoose")
+
+
+
 
 const UserSchema = new mongoose.Schema({
     name: String,
@@ -6,14 +10,19 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true ,
-        lowercase:true
+        lowercase:true,
+       
+      },
       
+    // thoughts:{
+    //     type:mongoose.SchemaType.ObjectId,
+    //     ref:"Thought"
+    // },
+     
+    friends:{
+        type:mongoose.SchemaTypes.ObjectId,
+        ref: "User"
     },
-    //joining wiht thought
-    // thought:mongoose.SchemaType.Objectid,
-    //friends
-    friends:[String],
-    //
     createdAt:{
         type: Date,
         default: ()=> Date.now(),
@@ -24,11 +33,16 @@ const UserSchema = new mongoose.Schema({
     },
     
     
+    
 })
 
-UserSchema.virtual("friends").get(function(){
-    return`${this.friends}`
+UserSchema
+.virtual('friendcount')
+.get(function(){
+    return `${this.friends}`
 })
+
+
 
 const User= mongoose.model('User', UserSchema)
 
@@ -37,7 +51,9 @@ const handleError =(err)=> console.error(err);
 User.create({
     name: 'Roberto',
     age: 32,
-    email: 'TEST@TEST.COM'
+    email: 'TEST@TEST.COM',
+    Friends:26,
+    
 },
 (err) => (err ? handleError(err) : console.log('Document created'))
 )
