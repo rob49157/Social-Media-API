@@ -1,4 +1,4 @@
-const { MongoGridFSChunkError } = require("mongodb")
+const { MongoGridFSChunkError, ObjectId } = require("mongodb")
 const mongoose = require("mongoose")
 
 
@@ -20,6 +20,7 @@ const UserSchema = new mongoose.Schema({
     // },
      
     friends:{
+        friends:[ObjectId],
         type:mongoose.SchemaTypes.ObjectId,
         ref: "User"
     },

@@ -1,6 +1,27 @@
 const {Schema, model}= require('mongoose')
 const mongoose = require('mongoose')
 
+
+// reaction subdocument
+const reactionSchema= new mongoose.Schema({
+    reactionId:{},
+    reactionbody:{
+        type:String,
+        require:true,
+        maxlength:280
+    },
+    username:{
+        type:String,
+        require:true,
+    },
+    createdAt:{
+        type:Date,
+        default: ()=>Date.now
+        
+    }
+})
+
+//thought table
 const ThoughtSchema= new mongoose.Schema({
     thoughttext: {
         type: String,
@@ -17,31 +38,37 @@ const ThoughtSchema= new mongoose.Schema({
         type:String,
         require:true,
     },
-    reaction:[{
-        
-    }]
-        //array of nested documents created with "reaction schema"
-    
-})
+    reactions:[reactionSchema]
+        })
+
+// reaction subdocument
 
 const Thoughts=mongoose.model('Thought',ThoughtSchema)
 
-const handleError =(err)=> console.error(err);
+const mainuserdata = {thoughttext:"this thought is for testing",username:"roberto"}
+const secondaryuserdata=[
+    {thoughttext:"this is the second test thought",username:"roberto"},
+    {thoughttext:"this is the third test thought",username:"roberto"}
+]
 
-ThoughtSchema.virtual('reactioncount').get(function(){
-    return `${this.reaction}`
-})
-
-Thoughts.create({
-    thoughttext:"checking text functionality",
-    username: 'roberto'
-
-})
+Thoughts.create({ username: mainuserdata, thoughttext: secondaryuserdata}
+)
 
 
-ThoughtSchema.pre("save",function(next){
-    this.updatedAt= Date.now()
-})
+
+// const handleError =(err)=> console.error(err);
+
+// ThoughtSchema.virtual('reactioncount').get(function(){
+//     return `${this.reaction}`
+// })
+
+// Thoughts.create({
+//     thoughttext:"checking text functionality",
+//     username: 'roberto'
+
+// })
+
+
 
 
 module.exports= Thoughts
