@@ -1,5 +1,6 @@
 const { MongoGridFSChunkError, ObjectId } = require("mongodb")
 const mongoose = require("mongoose")
+const Thoughts = require("./thought")
 
 
 
@@ -14,11 +15,8 @@ const UserSchema = new mongoose.Schema({
        
       },
       
-    // thoughts:{
-    //     type:mongoose.SchemaType.ObjectId,
-    //     ref:"Thought"
-    // },
-     
+      thoughts:[{type: mongoose.SchemaTypes.ObjectId, ref: "Thoughts"}],
+      friends:[{type: mongoose.SchemaTypes.ObjectId, ref: "UserSchema"}],
     friends:{
         friends:[ObjectId],
         type:mongoose.SchemaTypes.ObjectId,
@@ -53,12 +51,11 @@ User.create({
     name: 'Roberto',
     age: 32,
     email: 'TEST@TEST.COM',
-    Friends:26,
+    // Friends:26,
+    thoughts: ["61dcb2538039a62f567c7cfd", "61dcb394121de68b42e68b21"]
     
 },
 (err) => (err ? handleError(err) : console.log('Document created'))
 )
 
 module.exports= User
-
-// module.exports=mongoose.model("User",UserSchema)

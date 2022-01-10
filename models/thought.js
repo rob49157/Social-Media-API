@@ -1,4 +1,5 @@
 const {Schema, model}= require('mongoose')
+const {User} = require("./User")
 const mongoose = require('mongoose')
 
 
@@ -34,9 +35,8 @@ const ThoughtSchema= new mongoose.Schema({
         default:()=> Date.now()
         // getter method to format timestamp
     },
-    username:{
-        type:String,
-        require:true,
+    username: {
+        type: String
     },
     reactions:[reactionSchema]
         })
@@ -45,28 +45,10 @@ const ThoughtSchema= new mongoose.Schema({
 
 const Thoughts=mongoose.model('Thought',ThoughtSchema)
 
-const mainuserdata = {thoughttext:"this thought is for testing",username:"roberto"}
-const secondaryuserdata=[
-    {thoughttext:"this is the second test thought",username:"roberto"},
-    {thoughttext:"this is the third test thought",username:"roberto"}
-]
-
-Thoughts.create({ username: mainuserdata, thoughttext: secondaryuserdata}
-)
+const mainuserdata = {thoughttext:"testestestestests",username:"roberto"}
 
 
-
-// const handleError =(err)=> console.error(err);
-
-// ThoughtSchema.virtual('reactioncount').get(function(){
-//     return `${this.reaction}`
-// })
-
-// Thoughts.create({
-//     thoughttext:"checking text functionality",
-//     username: 'roberto'
-
-// })
+Thoughts.create({ username:mainuserdata['username'], thoughttext: mainuserdata['thoughttext']})
 
 
 
