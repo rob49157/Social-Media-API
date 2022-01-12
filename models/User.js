@@ -17,11 +17,7 @@ const UserSchema = new mongoose.Schema({
       
       thoughts:[{type: mongoose.SchemaTypes.ObjectId, ref: "Thoughts"}],
       friends:[{type: mongoose.SchemaTypes.ObjectId, ref: "UserSchema"}],
-    friends:{
-        friends:[ObjectId],
-        type:mongoose.SchemaTypes.ObjectId,
-        ref: "User"
-    },
+    
     createdAt:{
         type: Date,
         default: ()=> Date.now(),
