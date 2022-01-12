@@ -14,10 +14,10 @@ const UserSchema = new mongoose.Schema({
         lowercase:true,
        
       },
-      
+      posts:{
       thoughts:[{type: mongoose.SchemaTypes.ObjectId, ref: "Thoughts"}],
       friends:[{type: mongoose.SchemaTypes.ObjectId, ref: "UserSchema"}],
-    
+      },
     createdAt:{
         type: Date,
         default: ()=> Date.now(),
