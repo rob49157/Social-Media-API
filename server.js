@@ -23,7 +23,7 @@ app.get('/Username',(req,res)=>{
 })
 
 
-//post friends
+//post/update friends
 
 var id = '5ebadc45a99bde77b2efb20e';
 User.findById(id, function (err, docs) {
@@ -34,15 +34,22 @@ User.findById(id, function (err, docs) {
         console.log("Result : ", docs);
     }
 });
-
+// update user
 app.put('/username/:id',(req,res)=>{
     
     var id = req.params.id;
     console.log(req.body)
-    User.findByIdAndUpdate(id, req.body, {upsert: true}, function(err, doc) {
+    User.findByIdAndUpdate(id, req.body, {$set: true}, function(err, doc) {
         if (err) return res.send(500, {error: err});
         return res.send('Succesfully saved.');
     });
+})
+
+//delete user
+
+app.delete('/username/:id',(req,res)=>{
+    var id= req.params.id
+    User.deleteOne({ id : ObjectId("YOUR-UNIQUE_ID")})
 })
 
 //     return User.findOne({ friends: friends })
