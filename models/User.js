@@ -20,14 +20,7 @@ const UserSchema = new mongoose.Schema({
       friends:[{type: mongoose.SchemaTypes.ObjectId, ref: "UserSchema"}],
       
       },
-    createdAt:{
-        type: Date,
-        default: ()=> Date.now(),
-    },
-    UpdateAt: {
-        type: Date,
-        default: ()=> Date.now(),
-    },
+    
     
     
     
@@ -46,7 +39,7 @@ const User= mongoose.model('User', UserSchema)
 const handleError =(err)=> console.error(err);
 
 User.create({
-    name: 'Roberto',
+    name: 'roberto',
     age: 32,
     email: 'TEST@TEST.COM',
     // Friends:26,

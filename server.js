@@ -24,17 +24,6 @@ app.get('/username',(req,res)=>{
 })
 
 
-//post/update friends
-
-// var id = '5ebadc45a99bde77b2efb20e';
-// User.findById(id, function (err, docs) {
-//     if (err){
-//         console.log(err);
-//     }
-//     else{
-//         console.log("Result : ", docs);
-//     }
-// });
 // update user
 app.put('/username/:id',(req,res)=>{
     
@@ -46,6 +35,7 @@ app.put('/username/:id',(req,res)=>{
     });
 })
 
+// delete user
 app.delete('/username/:id',(req,res)=>{
     
     var id = req.params.id;
@@ -58,26 +48,26 @@ app.delete('/username/:id',(req,res)=>{
 
 
 
+//create user
+app.post('/create',(req,res)=>{
+    User.create({
+        name:req.body.name,
+        age:req.body.age,
+        email: req.body.email
+    },
+    (err,results)=>{
+        if(err)throw err;
+        res.json(results)
+    }
+)})
 
 
 
-// //delete user
-// app.delete('/username/:id', (req, res) => {
-    
-//     // Use deleteOne() to delete one object
-//     User.findByIdAndDelete(
-        
-//       // This is the filter. The delete only the document that matches the _id provided in the request body
-//       { _id: ObjectId(req.body.id) },
-//       (err) => {
-//         if (err) throw err;
-//         res.send('Document deleted');
-//       } 
-     
-//     );
-//   });
+
+
+
   
-
+// friends
 //     return User.findOne({ friends: friends })
 //       .populate('friends').exec((err, posts) => {
 //         console.log("Populated User " + posts); 
