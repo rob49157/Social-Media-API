@@ -48,7 +48,7 @@ app.put('/username/:id',(req,res)=>{
 
 app.delete('/username/:id',(req,res)=>{
     
-    var id = "61d786e8ec473802669da4ea"
+    var id = req.params.id;
     console.log(req.body)
     User.findByIdAndDelete(id, function(err, doc) {
         if (err) return res.send(500, {error: err});
