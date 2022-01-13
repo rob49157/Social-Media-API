@@ -3,6 +3,7 @@ const express =require('express')
 const db =require('./config/connection')
 
 const {User, Thoughts}= require("./models")
+const { MongoClient: mongodb, ObjectId } = require('mongodb');
 
 const PORT =process.env.PORT || 3001;
 const app =express()
@@ -12,7 +13,7 @@ app.use(express.json())
 
 
 // finds users
-app.get('/Username',(req,res)=>{
+app.get('/username',(req,res)=>{
     User.find({},(err,result)=>{
         if(err){
             res.status(500).send({message:'internal error'})
@@ -25,15 +26,15 @@ app.get('/Username',(req,res)=>{
 
 //post/update friends
 
-var id = '5ebadc45a99bde77b2efb20e';
-User.findById(id, function (err, docs) {
-    if (err){
-        console.log(err);
-    }
-    else{
-        console.log("Result : ", docs);
-    }
-});
+// var id = '5ebadc45a99bde77b2efb20e';
+// User.findById(id, function (err, docs) {
+//     if (err){
+//         console.log(err);
+//     }
+//     else{
+//         console.log("Result : ", docs);
+//     }
+// });
 // update user
 app.put('/username/:id',(req,res)=>{
     
@@ -45,12 +46,37 @@ app.put('/username/:id',(req,res)=>{
     });
 })
 
-//delete user
-
 app.delete('/username/:id',(req,res)=>{
-    var id= req.params.id
-    User.deleteOne({ id : ObjectId("YOUR-UNIQUE_ID")})
+    
+    var id = "61d786e8ec473802669da4ea"
+    console.log(req.body)
+    User.findByIdAndDelete(id, function(err, doc) {
+        if (err) return res.send(500, {error: err});
+        return res.send('Succesfully deleted.');
+    });
 })
+
+
+
+
+
+
+// //delete user
+// app.delete('/username/:id', (req, res) => {
+    
+//     // Use deleteOne() to delete one object
+//     User.findByIdAndDelete(
+        
+//       // This is the filter. The delete only the document that matches the _id provided in the request body
+//       { _id: ObjectId(req.body.id) },
+//       (err) => {
+//         if (err) throw err;
+//         res.send('Document deleted');
+//       } 
+     
+//     );
+//   });
+  
 
 //     return User.findOne({ friends: friends })
 //       .populate('friends').exec((err, posts) => {
@@ -70,6 +96,8 @@ app.delete('/username/:id',(req,res)=>{
 //     })
     
 // })
+
+
 // get thoughts
 app.get('/thoughts',(req,res)=>{
     Thoughts.find({},(err,result)=>{
