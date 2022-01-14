@@ -23,6 +23,17 @@ app.get('/username',(req,res)=>{
     })
 })
 
+// find user by id
+app.get('/username/:id',(req,res)=>{
+    
+    var id = req.params.id;
+    console.log(req.body)
+    User.findById(id, function(err, doc) {
+        if (err) return res.send(500, {error: err});
+        return res.send('Succesfully found.');
+    });
+})
+
 
 // update user
 app.put('/username/:id',(req,res)=>{
@@ -53,7 +64,8 @@ app.post('/create',(req,res)=>{
     User.create({
         name:req.body.name,
         age:req.body.age,
-        email: req.body.email
+        email: req.body.email,
+        
     },
     (err,results)=>{
         if(err)throw err;
@@ -61,12 +73,6 @@ app.post('/create',(req,res)=>{
     }
 )})
 
-
-
-
-
-
-  
 // friends
 //     return User.findOne({ friends: friends })
 //       .populate('friends').exec((err, posts) => {
@@ -98,6 +104,42 @@ app.get('/thoughts',(req,res)=>{
         }
     })
 })
+
+//find thoughtby id
+app.get('/thoughts/:id',(req,res)=>{
+    
+    var id = req.params.id;
+    console.log(req.body)
+    Thoughts.findById(id, function(err, doc) {
+        if (err) return res.send(500, {error: err});
+        return res.send('Succesfully found.');
+    });
+})
+
+// delete thoughts
+app.delete('/thoughts/:id',(req,res)=>{
+    
+    var id = req.params.id;
+    console.log(req.body)
+    Thoughts.findByIdAndDelete(id, function(err, doc) {
+        if (err) return res.send(500, {error: err});
+        return res.send('Succesfully deleted.');
+    });
+})
+
+//update thought
+app.put('/thoughts/:id',(req,res)=>{
+    
+    var id = req.params.id;
+    console.log(req.body)
+    Thoughts.findByIdAndUpdate(id, req.body, {$set: true}, function(err, doc) {
+        if (err) return res.send(500, {error: err});
+        return res.send('Succesfully updated.');
+    });
+})
+
+
+// post new thought
 
 db.once('open',()=>{
     app.listen(PORT,()=>{

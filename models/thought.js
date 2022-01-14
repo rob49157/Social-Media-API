@@ -45,7 +45,7 @@ const ThoughtSchema= new mongoose.Schema({
 
 const Thoughts=mongoose.model('Thought',ThoughtSchema)
 
-const mainuserdata = {thoughttext:"testestestestests",username:"roberto"}
+const mainuserdata = {thoughttext:"this is a test",username:"roberto"}
 
 
 Thoughts.create({ username:mainuserdata['username'], thoughttext: mainuserdata['thoughttext']})
