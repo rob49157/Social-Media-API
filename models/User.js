@@ -1,6 +1,6 @@
 const { MongoGridFSChunkError, ObjectId } = require("mongodb")
 const mongoose = require("mongoose")
-const Thoughts = require("./thought")
+const {Thought} = require("./thought")
 
 
 
@@ -14,36 +14,38 @@ const UserSchema = new mongoose.Schema({
         lowercase:true,
        
       },
-      posts:{
-      thoughts:[{type: mongoose.SchemaTypes.ObjectId, ref: "Thoughts"}],
-
-      friends:[{type: mongoose.SchemaTypes.ObjectId, ref: "UserSchema"}],
       
-      },
-    
-    
-    
-    
-})
+        
+      thoughts:[{type: mongoose.SchemaTypes.ObjectId, ref: "Thought"}],
+      
+      friends:[{type: mongoose.SchemaTypes.ObjectId, ref: "User"}],
+      
+      
+   
 
+    })
+
+
+
+// Create a virtual property `tagCount` that gets the amount of comments per user
 UserSchema
-.virtual('friendcount')
-.get(function(){
-    return `${this.friends}`
-})
-
-
+  .virtual('friendcount')
+  // Getter
+  .get(function () {
+    return this.friends.length;
+  });
 
 const User= mongoose.model('User', UserSchema)
 
 const handleError =(err)=> console.error(err);
 
 User.create({
-    name: 'roberto',
+    name: 'rontron',
     age: 32,
     email: 'TEST@TEST.COM',
     // Friends:26,
-    posts: ["61e075c15767a0f4938d647b"],
+    thoughts: ["61e175dd4a7d337e1b3872b4"],
+    friends:["61e1f8990534f326ad9adcc6"]
 
     
 
