@@ -1,8 +1,7 @@
 const {Schema, model}= require('mongoose')
 const {User} = require("./User")
 const mongoose = require('mongoose')
-const time= require("../utils/date")
-const { Timestamp } = require('mongodb')
+
 
 
 // reaction subdocument
@@ -20,7 +19,7 @@ const reactionSchema= new mongoose.Schema({
     createdAt:{
         type:Date,
         default: ()=>Date.now,
-        get:(Timestamp)=>time(Timestamp)
+       
 
         
     }
@@ -60,10 +59,10 @@ const ThoughtSchema= new mongoose.Schema({
 
 const Thoughts=mongoose.model('Thought',ThoughtSchema)
 
-const mainuserdata = {thoughttext:"this is a test",username:"roberto"}
+// const mainuserdata = {thoughttext:"this is a test",username:"roberto"}
 
 
-Thoughts.create({ username:mainuserdata, thoughttext: mainuserdata['thoughttext']})
+// Thoughts.create({ username:mainuserdata, thoughttext: mainuserdata['thoughttext']})
 
 
 
