@@ -100,7 +100,7 @@ app.delete('/username/:userid/friend/:friendid',(req,res)=>{
         console.log(err)
     }
     else{
-        return res.send('Succesfully deleted.');
+        return res.send(docs);
     }
 });
 })
@@ -144,7 +144,7 @@ app.get('/thoughts/:id',(req,res)=>{
     console.log(req.body)
     Thoughts.findById(id, function(err, doc) {
         if (err) return res.send(500, {error: err});
-        return res.send('Succesfully found.');
+        return res.send(doc);
     });
 })
 
@@ -175,10 +175,9 @@ app.put('/thoughts/:id',(req,res)=>{
 
 app.post('/createthought',(req,res)=>{
     Thoughts.create({
-        // name:req.body.name,
-        // age:req.body.age,
-        // email: req.body.email,
-        thoughtext:req.body.type
+        thoughtext:req.body.thoughtext,
+        username:req.body.username
+       
         
     },
     (err,results)=>{
@@ -187,8 +186,36 @@ app.post('/createthought',(req,res)=>{
     }
 )})
 
+// reactions id
 
-//
+app.get('/thoughts/:userid/reaction/:reactionid',(req,res)=>{
+    var reactionid = req.params.reactionid;
+    console.log(req.body)
+    Thoughts.findByIdAndUpdate(reactionid, { "$push": {thoughttext: req.params.friendid}},
+                            function (err, docs) {
+    if (err){
+        console.log(err)
+    }
+    else{
+        return res.send('Succesfully saved.');
+    }
+});
+})
+
+// delete reaction
+app.delete('/thoughts/:userid/reaction/:reactionid',(req,res)=>{
+    var reactionid = req.params.reactionid;
+    console.log(req.body)
+    Thoughts.findByIdAndUpdate(reactionid, { "$pull": {thoughttext: req.params.reactionid}},
+                            function (err, docs) {
+    if (err){
+        console.log(err)
+    }
+    else{
+        return res.send('Succesfully deleted.');
+    }
+});
+})
 db.once('open',()=>{
     app.listen(PORT,()=>{
         console.log(`API server running on port ${PORT}!`)

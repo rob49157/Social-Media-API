@@ -1,26 +1,30 @@
 const {Schema, model}= require('mongoose')
 const {User} = require("./User")
 const mongoose = require('mongoose')
+const time= require("../utils/date")
+const { Timestamp } = require('mongodb')
 
 
-// // reaction subdocument
-// const reactionSchema= new mongoose.Schema({
-//     reactionId:{},
-//     reactionbody:{
-//         type:String,
-//         require:true,
-//         maxlength:280
-//     },
-//     username:{
-//         type:String,
-//         require:true,
-//     },
-//     createdAt:{
-//         type:Date,
-//         default: ()=>Date.now
+// reaction subdocument
+const reactionSchema= new mongoose.Schema({
+    reactionId:{},
+    reactionbody:{
+        type:String,
+        require:true,
+        maxlength:280
+    },
+    username:{
+        type:String,
+        require:true,
+    },
+    createdAt:{
+        type:Date,
+        default: ()=>Date.now,
+        get:(Timestamp)=>time(Timestamp)
+
         
-//     }
-// })
+    }
+})
 
 //thought table
 const ThoughtSchema= new mongoose.Schema({
@@ -32,9 +36,17 @@ const ThoughtSchema= new mongoose.Schema({
     },
     createdat:{
         type:Date,
-        default:()=> Date.now()
+        default:()=> Date.now(),
+        get:(Timestamp)=>time(Timestamp)
         // getter method to format timestamp
     },
+    username:{
+        type:String,
+        require:true,
+        ref:"User"
+    },
+    reactions: [reactionSchema]
+})
     // username: {
     //     field:{type:String},
         
@@ -42,10 +54,7 @@ const ThoughtSchema= new mongoose.Schema({
     //     ref:'User'
     // },
     
-    // reactions:{
-    //     type:[reactionSchema]
-    
-        })
+   
 
 // reaction subdocument
 
